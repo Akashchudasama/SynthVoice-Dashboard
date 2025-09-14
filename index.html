@@ -7,6 +7,29 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="dashboard">
+    <h1>SynthVoice Dashboard</h1>
+    <p>Discover cutting-edge voice applications powered by AI</p>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png" alt="Voice Identifier">
+      <h2>Voice Identifier</h2>
+      <p>Identify unique voices from a database with advanced AI algorithms.</p>
+      <a href="https://voice-identifier-from-data-base.streamlit.app/" target="_blank" rel="noopener noreferrer">Launch App</a>
+    </div>
+
+    <div class="card">
+      <img src="https://cdn-icons-png.flaticon.com/512/2928/2928889.png" alt="Voice Matcher">
+      <h2>Voice Matcher</h2>
+      <p>Find the closest voice match with AI similarity analysis.</p>
+      <a href="https://voicematcher.streamlit.app/" target="_blank" rel="noopener noreferrer">Launch App</a>
+    </div>
+  </div>
 
   <style>
     :root {
@@ -121,6 +144,7 @@
       background: radial-gradient(circle at center, var(--glow-color) 0%, transparent 70%);
       opacity: 0;
       transition: opacity 0.5s;
+      pointer-events: none; /* ✅ prevent blocking clicks */
     }
 
     .card:hover {
@@ -161,6 +185,9 @@
       font-weight: 600;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       box-shadow: 0 4px 15px rgba(0, 176, 255, 0.4);
+      position: relative;
+      z-index: 2; /* ✅ keep button above overlays */
+      cursor: pointer; /* ✅ show hand on hover */
     }
 
     .card a:hover {
@@ -168,6 +195,17 @@
       box-shadow: 0 6px 20px rgba(0, 176, 255, 0.6);
     }
   </style>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SynthVoice Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -177,7 +215,6 @@
   </div>
 
   <div class="card-grid">
-    <!-- Voice Identifier -->
     <div class="card">
       <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png" alt="Voice Identifier">
       <h2>Voice Identifier</h2>
@@ -185,7 +222,6 @@
       <a href="https://voice-identifier-from-data-base.streamlit.app/" target="_blank" rel="noopener noreferrer">Launch App</a>
     </div>
 
-    <!-- Voice Matcher -->
     <div class="card">
       <img src="https://cdn-icons-png.flaticon.com/512/2928/2928889.png" alt="Voice Matcher">
       <h2>Voice Matcher</h2>
@@ -194,5 +230,170 @@
     </div>
   </div>
 
+  <style>
+    :root {
+      --bg-color-start: #1e1e2f;
+      --bg-color-end: #1a1a2e;
+      --card-bg: rgba(30, 30, 47, 0.4);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --text-color: #e0e0e0;
+      --accent-color: #00b0ff;
+      --accent-color-hover: #0099e6;
+      --glow-color: #00b0ff;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--bg-color-start), var(--bg-color-end));
+      color: var(--text-color);
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      left: -100px;
+      width: 400px;
+      height: 400px;
+      background: rgba(0, 176, 255, 0.3);
+      border-radius: 50%;
+      filter: blur(150px);
+      z-index: -1;
+      animation: move-blob 15s infinite alternate ease-in-out;
+    }
+
+    body::after {
+      content: '';
+      position: absolute;
+      bottom: -150px;
+      right: -150px;
+      width: 500px;
+      height: 500px;
+      background: rgba(255, 0, 110, 0.3);
+      border-radius: 50%;
+      filter: blur(150px);
+      z-index: -1;
+      animation: move-blob 20s infinite alternate ease-in-out reverse;
+    }
+
+    @keyframes move-blob {
+      from { transform: translate(0, 0) scale(1); }
+      to { transform: translate(150px, 150px) scale(1.1); }
+    }
+
+    .dashboard {
+      text-align: center;
+      padding: 2rem;
+      z-index: 1;
+    }
+
+    .dashboard h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      background: linear-gradient(to right, #00b0ff, #80dfff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .dashboard p {
+      color: #9ca3af;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      margin-bottom: 3rem;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2.5rem;
+      max-width: 900px;
+      width: 100%;
+      padding: 0 1rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--card-border);
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      padding: 2.5rem;
+      text-align: center;
+      transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s, border 0.4s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 1.5rem;
+      background: radial-gradient(circle at center, var(--glow-color) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.5s;
+      pointer-events: none; /* ✅ prevent blocking clicks */
+    }
+
+    .card:hover {
+      transform: translateY(-15px) scale(1.03);
+      box-shadow: 0 16px 48px 0 rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .card:hover::before {
+      opacity: 0.1;
+    }
+
+    .card img {
+      width: 100px;
+      margin-bottom: 1.5rem;
+      filter: drop-shadow(0 0 10px rgba(0, 176, 255, 0.5));
+    }
+
+    .card h2 {
+      font-size: 1.7rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .card p {
+      font-size: 1rem;
+      color: #b0b0b0;
+      margin-bottom: 1.5rem;
+    }
+
+    .card a {
+      display: inline-block;
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      text-decoration: none;
+      background: linear-gradient(45deg, var(--accent-color), #40c4ff);
+      color: white;
+      font-weight: 600;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 176, 255, 0.4);
+      position: relative;
+      z-index: 2; /* ✅ keep button above overlays */
+      cursor: pointer; /* ✅ show hand on hover */
+    }
+
+    .card a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 176, 255, 0.6);
+    }
+  </style>
 </body>
 </html>
+
